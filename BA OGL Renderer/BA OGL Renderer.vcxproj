@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DD26DBA6-5697-468F-80FA-9E8C56BC3E6B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>BAOGLRenderer</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetExt>.lib</TargetExt>
+    <OutDir>..\lib\$(Platform)\</OutDir>
+    <IntDir>..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\lib\$(Platform)\</OutDir>
+    <IntDir>..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include\Core;..\include\BA OGL Renderer;..\dependencies\glm;..\dependencies\assimp\include\assimp;..\dependencies\gl\include;..\dependencies\GLFW\include\GLFW;</AdditionalIncludeDirectories>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>Core_d.lib;OpenGL32.Lib;glew32.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib\$(Platform);..\dependencies\gl\lib;..\dependencies\GLFW\lib-msvc110</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include\Core;..\include\BA OGL Renderer;..\dependencies\glm;..\dependencies\assimp\include\assimp;..\dependencies\gl\include;..\dependencies\GLFW\include\GLFW;..\..\dependencies\glm;..\..\dependencies\assimp\include\assimp;..\..\dependencies\gl\include;..\..\dependencies\GLFW\include\GLFW;</AdditionalIncludeDirectories>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>Core.lib;OpenGL32.Lib;glew32.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib\$(Platform);..\dependencies\gl\lib;..\dependencies\GLFW\lib-msvc110</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\BA OGL Renderer\Camera.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\Framebuffer.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\Mesh.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\MeshData.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\FreeCamera.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\GLSLProgram.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\GraphicsWindow.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\Model.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\OGLErrorHandling.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\Quad.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\Sampler.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\TextureManager.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\GLSLUniformBuffer.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\VAO.h" />
+    <ClInclude Include="..\include\BA OGL Renderer\VBO.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Framebuffer.cpp" />
+    <ClCompile Include="GLSLUniformBuffer.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshData.cpp" />
+    <ClCompile Include="FreeCamera.cpp" />
+    <ClCompile Include="GLSLProgram.cpp" />
+    <ClCompile Include="GraphicsWindow.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="OGLErrorHandling.cpp" />
+    <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="Sampler.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="VAO.cpp" />
+    <ClCompile Include="VBO.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
