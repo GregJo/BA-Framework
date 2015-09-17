@@ -51,6 +51,8 @@ public:
 	const GLuint	getDepthStencilAttachment();
 	void			setDepthStencilAttachment();
 
+	const GLuint	getFBOHandle() { return m_fboHandle; }
+
 	void bindForRenderPass(std::vector<unsigned int> attachmentIndices);
 	void bindForDepthPass();
 

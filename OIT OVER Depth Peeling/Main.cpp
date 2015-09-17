@@ -324,6 +324,16 @@ int main()
 			glDepthFunc(GL_LEQUAL);
 			glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+			// Blitting the opaque scene depth to propperly depth test the transparen against it.
+			frameBufferOpaque->bindForReading();
+
+			frameBuffer_1->bindForWriting();
+			glBlitFramebuffer(0, 0, window->getWindowWidth(), window->getWindowHeight(), 0, 0, window->getWindowWidth(), window->getWindowHeight(), 
+							  GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+
+			frameBuffer_1->bind();
+			frameBuffer_1->bindForRenderPass(activeColorAttachments_allFBOs);
+
 			//defaultShader->use();
 			//model->renderOpaque();
 			model->renderTransparent();
@@ -416,6 +426,16 @@ int main()
 				glEnable(GL_DEPTH_TEST);
 				glDepthMask(GL_TRUE);
 				glDepthFunc(GL_LEQUAL);
+
+				// Blitting the opaque scene depth to propperly depth test the transparen against it.
+				frameBufferOpaque->bindForReading();
+
+				frameBuffer_2->bindForWriting();
+				glBlitFramebuffer(0, 0, window->getWindowWidth(), window->getWindowHeight(), 0, 0, window->getWindowWidth(), window->getWindowHeight(), 
+								  GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+
+				frameBuffer_2->bind();
+				frameBuffer_2->bindForRenderPass(activeColorAttachments_allFBOs);
 
 				depthPeelingShader->use();
 				// Render a layer.

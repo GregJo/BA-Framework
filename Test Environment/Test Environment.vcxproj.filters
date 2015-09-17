@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\OIT Algorithms">
+      <UniqueIdentifier>{4298d110-aa4f-4f5b-a2ab-08c464f77b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\OIT Algorithms">
+      <UniqueIdentifier>{32959e00-1163-44a1-bdce-1de8356ca357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\OIT Algorithms\OIT Algorithms Interface">
+      <UniqueIdentifier>{e66414cb-747d-4edf-98f6-e037b3580204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\Default Shader">
+      <UniqueIdentifier>{7e6d25fe-5bcc-4834-bd9c-fc1c169493e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\OIT OVER Depth Peeling Shader">
+      <UniqueIdentifier>{0603749e-b66b-4362-b3ce-62f49fe04560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\OIT Weighted Sum">
+      <UniqueIdentifier>{06d9d2a9-be1a-49e4-8ee6-bbde056cc17e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\OIT Weighted Average Shader">
+      <UniqueIdentifier>{34098b8d-78db-4bdd-b100-03fae4ae9502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\OIT New Coverage Shader">
+      <UniqueIdentifier>{6c6be43b-2c61-4a51-b18b-919c1be741d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\Difference Image">
+      <UniqueIdentifier>{00cc2cbc-5d6b-4f14-b8f4-2b4bd4811077}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="OIT Test Environment.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="OIT OVER Depth Peeling Algorithm.cpp">
+      <Filter>Quelldateien\OIT Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="OIT Weighted Sum Algorithm.cpp">
+      <Filter>Quelldateien\OIT Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="OIT Weighted Average Algorithm.cpp">
+      <Filter>Quelldateien\OIT Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="OIT New Coverage Algorithm.cpp">
+      <Filter>Quelldateien\OIT Algorithms</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="screenFillingQuadFrag.glsl">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="screenFillingQuadVert.glsl">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="DepthPeelingVert.glsl">
+      <Filter>Ressourcendateien\OIT OVER Depth Peeling Shader</Filter>
+    </None>
+    <None Include="DepthPeelingFrag.glsl">
+      <Filter>Ressourcendateien\OIT OVER Depth Peeling Shader</Filter>
+    </None>
+    <None Include="Vert.glsl">
+      <Filter>Ressourcendateien\Default Shader</Filter>
+    </None>
+    <None Include="Frag.glsl">
+      <Filter>Ressourcendateien\Default Shader</Filter>
+    </None>
+    <None Include="WeightedSumFrag.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Sum</Filter>
+    </None>
+    <None Include="WeightedSumVert.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Sum</Filter>
+    </None>
+    <None Include="AccumTransparencyFrag.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyVert.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="WeightedAverageFrag.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="WeightedAverageVert.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="NewOITCoverageFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="NewOITCoverageVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="DifferenceImageFrag.glsl">
+      <Filter>Ressourcendateien\Difference Image</Filter>
+    </None>
+    <None Include="DifferenceImageVert.glsl">
+      <Filter>Ressourcendateien\Difference Image</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IOIT Algorithms.h">
+      <Filter>Headerdateien\OIT Algorithms\OIT Algorithms Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="OIT OVER Depth Peeling Algorithm.h">
+      <Filter>Headerdateien\OIT Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="OIT Weighted Sum Algorithm.h">
+      <Filter>Headerdateien\OIT Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="OIT Test Environment.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="OIT Weighted Average Algorithm.h">
+      <Filter>Headerdateien\OIT Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="OIT New Coverage Algorithm.h">
+      <Filter>Headerdateien\OIT Algorithms</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

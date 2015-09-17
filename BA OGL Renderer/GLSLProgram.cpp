@@ -296,7 +296,7 @@ void GLSLProgram::setUniform(const char *name,float x,float y,float z)
 void GLSLProgram::setUniform(const char *name, const glm::vec2 & v)
 {
 	const GLfloat val[2] = {v.x,v.y};
-	glUniform3fv(mf_getUniformLocation(name),1,val);
+	glUniform2fv(mf_getUniformLocation(name),1,val);
 
 	check_gl_error();
 }

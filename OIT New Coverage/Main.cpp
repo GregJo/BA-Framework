@@ -107,12 +107,25 @@ int main()
 	Model* model = new Model(glm::vec3(0,0,0), "../Content/Models/crytek-sponza/");
 	model->loadModel(modelImporter->getScene());
 
-	// Create framebuffer
+	// Create framebuffers
+	std::vector<unsigned int> activeColorAttachmentsOpaque;
+	std::vector<unsigned int> activeColorAttachmentsTransparent;
+
+	Framebuffer* opaqueFrameBuffer = new Framebuffer(window->getWindowWidth(),window->getWindowHeight());
+	
+	activeColorAttachmentsOpaque.push_back(0);
+
+	opaqueFrameBuffer->setColorAttachment(0);
+
+	//frameBuffer->setDepthAttachment();
+	opaqueFrameBuffer->setDepthStencilTexture();
+
+	opaqueFrameBuffer->unbind();
+
 	Framebuffer* accumFrameBuffer = new Framebuffer(window->getWindowWidth(),window->getWindowHeight());
 	
-	std::vector<unsigned int> activeColorAttachments;
-	activeColorAttachments.push_back(0);
-	activeColorAttachments.push_back(1);
+	activeColorAttachmentsTransparent.push_back(0);
+	activeColorAttachmentsTransparent.push_back(1);
 
 	accumFrameBuffer->setColorAttachment(0);
 	accumFrameBuffer->setColorAttachment(1);
@@ -127,6 +140,9 @@ int main()
 	additionalTextureHandles.push_back(accumFrameBuffer->getColorAttachment(0));
 	additionalTextureHandles.push_back(accumFrameBuffer->getColorAttachment(1));
 
+	std::vector<GLuint> opaqueTextureHandle;
+	opaqueTextureHandle.push_back(opaqueFrameBuffer->getColorAttachment(0));
+
 	// Move this to "GraphicsWindow" 
 	glfwSetCursorPos(window->getWindowHandle(), (double) (window->getWindowWidth()/2.0), (double) (window->getWindowHeight()/2.0));
 	
@@ -134,7 +150,8 @@ int main()
 	//glClearColor(0.4f,0.6f,0.94f,0.0f);
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 
-	const float clearColor = 1.0f;
+	const float clearColorWhite = 1.0f;
+	const float clearColorBlack = 0.0f;
 
 	// Sampler
 	GLuint sampler = 0;
@@ -150,7 +167,7 @@ int main()
 	// Render Loop
 	while(!window->shouldClose())
 	{
-		glClearColor(0.0f,0.0f,0.0f,0.0f);
+		//glClearColor(0.0f,0.0f,0.0f,0.0f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 		glEnable(GL_DEPTH_TEST);
@@ -170,9 +187,24 @@ int main()
 		model->getCurrentGLSLProgram()->setUniform("normalMatrix", camera->getTranspInvMVMatrix()); // Change this!
 		model->getCurrentGLSLProgram()->setUniform("VPMatrix", camera->getVPMatrix());
 
+		opaqueFrameBuffer->clean();
+		opaqueFrameBuffer->bind();
+		opaqueFrameBuffer->bindForRenderPass(activeColorAttachmentsOpaque);
+
 		model->renderOpaque();
 		//quad4->render();
 		//quad5->render();
+
+		//opaqueFrameBuffer->unbind();
+
+		//// Blitting the opaque scene depth to propperly depth test the transparen against it.
+		//opaqueFrameBuffer->bindForReading();
+
+		//accumFrameBuffer->bindForWriting();
+		//glBlitFramebuffer(0, 0, window->getWindowWidth(), window->getWindowHeight(), 0, 0, window->getWindowWidth(), window->getWindowHeight(), 
+		//				  GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+
+		//opaqueFrameBuffer->unbind();
 
 		//_______________________________________________________________________________________________________________________________________________________________________________
 		// Acuumulation pass
@@ -188,9 +220,22 @@ int main()
 
 		accumFrameBuffer->clean();
 		accumFrameBuffer->bind();
-		accumFrameBuffer->bindForRenderPass(activeColorAttachments);
+		accumFrameBuffer->bindForRenderPass(activeColorAttachmentsTransparent);
+		accumFrameBuffer->cleanColorAttachment(1,clearColorWhite);
 
-		accumFrameBuffer->cleanColorAttachment(1,clearColor);
+		opaqueFrameBuffer->unbind();
+
+		// Blitting the opaque scene depth to propperly depth test the transparen against it.
+		opaqueFrameBuffer->bindForReading();
+
+		accumFrameBuffer->bindForWriting();
+		glBlitFramebuffer(0, 0, window->getWindowWidth(), window->getWindowHeight(), 0, 0, window->getWindowWidth(), window->getWindowHeight(), 
+						  GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+
+		opaqueFrameBuffer->unbind();
+
+		accumFrameBuffer->bind();
+		accumFrameBuffer->bindForRenderPass(activeColorAttachmentsTransparent);
 
 		glEnable(GL_BLEND);
 		glBlendFunci(0, GL_ONE, GL_ONE);
@@ -223,6 +268,11 @@ int main()
 
 		//_______________________________________________________________________________________________________________________________________________________________________________
 		// Final compositing pass
+
+		screenFillingQuad->setGLSLProgram(*screenFillingQuadShader);
+		screenFillingQuad->getCurrentShaderProgram()->use();
+		screenFillingQuad->renderWithAdditionalTextures(opaqueTextureHandle,sampler);
+
 		newOITCoverageShader->use();
 
 		glDepthMask(GL_FALSE);
@@ -238,8 +288,10 @@ int main()
 		// For debug!
 		//screenFillingQuad->setGLSLProgram(*screenFillingQuadShader);
 		//screenFillingQuad->getCurrentShaderProgram()->use();
-		//screenFillingQuad->setTexture(accumFrameBuffer->getColorAttachment(1));
+		//screenFillingQuad->setTexture(opaqueFrameBuffer->getColorAttachment(0));
 		//screenFillingQuad->render();
+
+		accumFrameBuffer->clean();
 
 		window->swapBuffers();
 
