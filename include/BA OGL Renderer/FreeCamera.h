@@ -25,6 +25,9 @@ public:
 
 	glm::vec3 getCamPos() { return m_position; }
 
+	// Get the X, Z rotation inverted view projection matrix (for billboards primarily).
+	glm::mat4 getInverseXZRotationVP() { return m_inverseXZRotationVP; }
+
 private:
 
 	double m_alpha; //!< stores value retrieved from vertical movement from the mouse for rotation of the camera. 
@@ -37,4 +40,7 @@ private:
 
 	void setCursorPos(GLFWwindow* window, double setX, double setY);
 	void setCursorPos(GLFWwindow* window);
+
+	// The X, Z rotation inverted view projection matrix. 
+	glm::mat4 m_inverseXZRotationVP;
 };

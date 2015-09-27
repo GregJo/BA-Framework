@@ -11,21 +11,26 @@ std::vector<GLSLProgram*> loadShader()
 	GLSLProgram* defaultShader = new GLSLProgram();
 	defaultShader->initShaderProgram("Vert.glsl","","","","Frag.glsl");
 
-	// Load Weighted Sum shader for alpha blending.
-	GLSLProgram* weightedSumShader = new GLSLProgram();
-	weightedSumShader->initShaderProgram("WeightedSumVert.glsl","","","","WeightedSumFrag.glsl");
+	//// Load Weighted Sum shader for alpha blending.
+	//GLSLProgram* weightedSumShader = new GLSLProgram();
+	//weightedSumShader->initShaderProgram("WeightedSumVert.glsl","","","","WeightedSumFrag.glsl");
 
-	// Load Depth Peeling shader for the depth peeling reference solution.
-	GLSLProgram* depthPeelingShader = new GLSLProgram();
-	depthPeelingShader->initShaderProgram("DepthPeelingVert.glsl","","","","DepthPeelingFrag.glsl");
+	//// Load Depth Peeling shader for the depth peeling reference solution.
+	//GLSLProgram* depthPeelingShader = new GLSLProgram();
+	//depthPeelingShader->initShaderProgram("DepthPeelingVert.glsl","","","","DepthPeelingFrag.glsl");
+
+	// Load billboard shader.
+	GLSLProgram* billboardShader = new GLSLProgram();
+	billboardShader->initShaderProgram("BillboardVert.glsl","","","","BillboardFrag.glsl");
 
 	// Load screen filling quad shader.
 	GLSLProgram* screenFillingQuadShader = new GLSLProgram();
 	screenFillingQuadShader->initShaderProgram("screenFillingQuadVert.glsl","","","","screenFillingQuadFrag.glsl");
 
 	outputShader.push_back(defaultShader);
-	outputShader.push_back(weightedSumShader);
-	outputShader.push_back(depthPeelingShader);
+	//outputShader.push_back(weightedSumShader);
+	//outputShader.push_back(depthPeelingShader);
+	outputShader.push_back(billboardShader);
 	outputShader.push_back(screenFillingQuadShader);
 
 	return outputShader;
@@ -41,14 +46,35 @@ void updateShaderUniforms(GraphicsWindow* window, FreeCamera* camera, std::vecto
 	shader[0]->setUniform("viewMatrix", camera->getVMatrix());
 	shader[0]->setUniform("normalMatrix", camera->getTranspInvMVMatrix()); // Change this!
 	shader[0]->setUniform("VPMatrix", camera->getVPMatrix());
-	// Weighted Sum shader
+	//// Weighted Sum shader
+	//shader[1]->use();
+	//shader[1]->setUniform("VPMatrix", camera->getVPMatrix());
+	//shader[1]->setUniform("windowSize", glm::vec2(window->getWindowWidth(),window->getWindowHeight()));
+	//// Depth Peeling shader
+	//shader[2]->use();
+	//shader[2]->setUniform("VPMatrix", camera->getVPMatrix());
+	//shader[2]->setUniform("windowSize", glm::vec2(window->getWindowWidth(),window->getWindowHeight()));
+
+	glm::mat4 cameraViewMatrix(camera->getVMatrix());
+
+	//cameraViewMatrix[0][0] = 1;
+	//cameraViewMatrix[0][1] = 0;
+	//cameraViewMatrix[0][2] = 0;
+
+	//// Column 2:
+	//cameraViewMatrix[2][0] = 0;
+	//cameraViewMatrix[2][1] = 0;
+	//cameraViewMatrix[2][2] = 1;
+
 	shader[1]->use();
 	shader[1]->setUniform("VPMatrix", camera->getVPMatrix());
-	shader[1]->setUniform("windowSize", glm::vec2(window->getWindowWidth(),window->getWindowHeight()));
-	// Depth Peeling shader
-	shader[2]->use();
-	shader[2]->setUniform("VPMatrix", camera->getVPMatrix());
-	shader[2]->setUniform("windowSize", glm::vec2(window->getWindowWidth(),window->getWindowHeight()));
+	//shader[1]->setUniform("PMatrix", camera->getPMatrix());
+	//shader[1]->setUniform("worldspaceParticleCenter", glm::vec3(300,200,0));
+	//shader[1]->setUniform("worldspaceCameraRightVector", glm::vec3(cameraViewMatrix[0][0], cameraViewMatrix[1][0], cameraViewMatrix[2][0]));
+	//shader[1]->setUniform("worldspaceCameraUpVector", glm::vec3(cameraViewMatrix[0][1], cameraViewMatrix[1][1], cameraViewMatrix[2][1]));
+	shader[1]->setUniform("worldspaceCameraRightVector", camera->getRightVector());
+	shader[1]->setUniform("worldspaceCameraUpVector", camera->getUpVector());
+
 
 	check_gl_error();
 }
@@ -65,7 +91,7 @@ void loadAdditionalTextures(std::vector<std::string> fullTexturePaths)
 // TODO
 // Maybe a few variations of this method, like "loadUniformlyDistributedContent()", or "loadArbitarilyDistributedContent()", for the different 
 // testing critria of the OIT algorithms.
-std::vector<Quad*> loadTransparentQuads()
+std::vector<Quad*> loadTransparentQuads(float scale)
 {
 	std::vector<Quad*> outputTransparentQuads;
 
@@ -76,6 +102,7 @@ std::vector<Quad*> loadTransparentQuads()
 	quad1->initQuad();
 	quad1->initDefaultTexture(175,0,0,125);
 	//quad1->setTexture(TextureManager::GetInstance().getTextureHandle("../Content/Textures/Particle_Smoke/smoke_particle_grey_base_2.png"));
+	quad1->setScale(scale);
 
 	transform = glm::vec3(-1,5,0);
 
@@ -83,25 +110,29 @@ std::vector<Quad*> loadTransparentQuads()
 	quad2->initQuad();
 	quad2->initDefaultTexture(150,55,0,125);
 	//quad2->setTexture(TextureManager::GetInstance().getTextureHandle("../Content/Textures/Particle_Smoke/smoke_particle_white_base.png"));
-	
+	quad2->setScale(scale);
+
 	transform = glm::vec3(7,-9,0);
 
 	Quad* quad3 = new Quad(transform + glm::vec3(100+100,100+100,100), transform + glm::vec3(100+100,-100+100,100), transform + glm::vec3(-100+100,-100+100,100), transform + glm::vec3(-100+100,100+100,100), glm::vec3(0), 10, 10, 0);
 	quad3->initQuad();
 	quad3->initDefaultTexture(150,80,0,125);
 	//quad3->setTexture(TextureManager::GetInstance().getTextureHandle("../Content/Textures/Particle_Smoke/smoke_particle_grey_base_3.png"));
+	quad3->setScale(scale);
 
 	transform = glm::vec3(-5,2,0);
 
 	Quad* quad4 = new Quad(transform + glm::vec3(100+100,100+100,-150), transform + glm::vec3(100+100,-100+100,-150), transform + glm::vec3(-100+100,-100+100,-150), transform + glm::vec3(-100+100,100+100,-150), glm::vec3(0), 10, 10, 0);
 	quad4->initQuad();
 	quad4->initDefaultTexture(0,105,150,125);
+	quad4->setScale(scale);
 
 	transform = glm::vec3(1,-2,0);
 
 	Quad* quad5 = new Quad(transform + glm::vec3(100+100,100+100,150), transform + glm::vec3(100+100,-100+100,150), transform + glm::vec3(-100+100,-100+100,150), transform + glm::vec3(-100+100,100+100,150), glm::vec3(0), 10, 10, 0);
 	quad5->initQuad();
 	quad5->initDefaultTexture(255,0,255,125);
+	quad5->setScale(scale);
 
 	outputTransparentQuads.push_back(quad1);
 	outputTransparentQuads.push_back(quad2);
@@ -114,18 +145,54 @@ std::vector<Quad*> loadTransparentQuads()
 	return outputTransparentQuads;
 }
 
-std::vector<Quad*> loadOpaqueQuads()
+std::vector<Quad*> loadBillboards(GLSLProgram* billboardShader, float scale)
+{
+	std::vector<Quad*> outputBillboards;
+
+	// Billboard quad.
+	glm::vec3 transform(0.0f, 0.0f, 0.0f);
+	Quad* billboardQuad = new Quad(transform + glm::vec3(100,100,0), transform + glm::vec3(100,-100,0), transform + glm::vec3(-100,-100,0), transform + glm::vec3(-100,100,0), glm::vec3(0), 10, 10, 0);
+	billboardQuad->initQuad();
+	billboardQuad->initDefaultTexture(255,0,0,125);
+	billboardQuad->setPosition(glm::vec3(500,200,0));
+	billboardQuad->setGLSLProgram(*billboardShader);
+
+	outputBillboards.push_back(billboardQuad);
+
+	check_gl_error();
+
+	return outputBillboards;
+}
+
+std::vector<Quad*> loadOpaqueQuads(float scale)
 {
 	std::vector<Quad*> outputOpaqueQuads;
 
 	return outputOpaqueQuads;
 }
 
+// Currently hardcoded values for the smoke particle system, such as smoke particle count, etc.
+std::vector<SmokeParticleSystem*> loadSmokeParticleSystem(FreeCamera* camera, float scale)
+{
+	std::vector<SmokeParticleSystem*> outputSmokeParticleSystems;
+
+	SmokeParticleSystem* smokeParticleSystem = new SmokeParticleSystem(30,400,200,glm::vec3(-300,25,0),glm::vec3(0,1,0),0.25f,1000.0f);
+	smokeParticleSystem->setGlobalScale(scale);
+	//smokeParticleSystem->setSmokeParticleScale(scale);
+	smokeParticleSystem->init(camera, "../Content/Textures/Particle_Smoke/smoke_particle_grey_base_3.png");
+
+	outputSmokeParticleSystems.push_back(smokeParticleSystem);
+
+	return outputSmokeParticleSystems;
+}
+
 void renderOpaqueGeometry( Framebuffer* frameBuffer, GLSLProgram* shader,
 							std::vector<GLuint> activeColorAttachments, std::vector<Model*> models, 
-							std::vector<Quad*> opaqueQuads)
+							std::vector<Quad*> opaqueQuads, std::vector<Quad*> opaqueBillboards,
+							float gloabalScale)
 {
 	shader->use();
+	shader->setUniform("scaleCoeff", gloabalScale);
 
 	frameBuffer->clean();
 	frameBuffer->bind();
@@ -151,6 +218,7 @@ void renderOpaqueGeometry( Framebuffer* frameBuffer, GLSLProgram* shader,
 		opaqueQuads[i]->render();
 	}
 
+	renderBillboards(shader, activeColorAttachments, opaqueBillboards);
 	//glDisable(GL_CULL_FACE);
 
 	//glEnable(GL_ALPHA_TEST);
@@ -169,7 +237,22 @@ void renderOpaqueGeometry( Framebuffer* frameBuffer, GLSLProgram* shader,
 	frameBuffer->unbind();
 }
 
-std::vector<Model*> loadModels(unsigned int processFlagsOnModelImport)
+void renderBillboards(GLSLProgram* shader, std::vector<GLuint> activeColorAttachments, std::vector<Quad*> billoards)
+{
+	if (billoards.size()>0)
+	{
+		billoards[0]->getCurrentShaderProgram()->use();
+		billoards[0]->getCurrentShaderProgram()->setUniform("worldspaceParticleCenter", billoards[0]->getPosition());
+		for (unsigned int i = 0; i < billoards.size(); i++)
+		{
+			billoards[i]->render();
+		}
+	}
+
+	shader->use();
+}
+
+std::vector<Model*> loadModels(unsigned int processFlagsOnModelImport, float scale)
 {
 	std::vector<Model*> outputModels;
 
@@ -179,6 +262,7 @@ std::vector<Model*> loadModels(unsigned int processFlagsOnModelImport)
 	// Create and initialize model
 	Model* model = new Model(glm::vec3(0,0,0), "../Content/Models/crytek-sponza/");
 	model->loadModel(modelImporter->getScene());
+	model->setScale(scale);
 
 	outputModels.push_back(model);
 	

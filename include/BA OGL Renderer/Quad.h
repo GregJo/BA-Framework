@@ -18,6 +18,11 @@ public:
 
 	void initQuad();
 
+	void setScale(float scale)
+	{
+		m_scale = scale;
+	}
+
 	void setTexCoords(GLfloat texCoords[8]);
 
 	void setTexture(std::string texturePath);
@@ -33,6 +38,11 @@ public:
 	void setPosition(glm::vec3 position)
 	{	
 		m_position = position;
+	}
+
+	float getScale()
+	{
+		return m_scale;
 	}
 
 	glm::vec3 getPosition() 
@@ -53,6 +63,7 @@ public:
 
 private:
 
+	float m_scale;
 	glm::vec3 m_position;
 
 	GLuint m_width;

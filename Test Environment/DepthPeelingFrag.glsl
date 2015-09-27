@@ -3,7 +3,7 @@
 layout (binding=0) uniform sampler2D texSampler;
 layout (binding=1) uniform sampler2D depthSampler;
 
-uniform vec2 windowSize = vec2(1900.0,1080.0);
+uniform vec2 windowSize = vec2(1600.0,1000.0);
 
 // Might not be necessary!
 layout( location = 0 ) out vec4 FragColor;

@@ -4,12 +4,18 @@ layout(location = 0) in vec3 in_Position;
 layout(location = 1) in vec2 in_UV;
 layout(location = 2) in vec3 in_Normal;
 
+uniform float scaleCoeff = 1.0;
 uniform vec3 lightPosition; // Light position in eye coords.
 uniform vec3 camPosition = vec3(0.0,0.0,0.0);
 uniform mat4 worldMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 normalMatrix;
 uniform mat4 VPMatrix;
+
+mat4 scaleMatrix = mat4(scaleCoeff,0.0,0.0,0.0,
+					0.0,scaleCoeff,0.0,0.0,
+					0.0,0.0,scaleCoeff,0.0,
+					0.0,0.0,0.0,1.0);
 
 out vec2 UV;
 out vec4 Position;
@@ -26,5 +32,5 @@ void main()
 	eyeLightPosition = viewMatrix * vec4(lightPosition,1.0f);
 	eyeCamPosition = viewMatrix * vec4(camPosition,1.0);
 
-	gl_Position = VPMatrix * vec4(in_Position,1.0f);
+	gl_Position = VPMatrix * scaleMatrix * vec4(in_Position,1.0f);
 }

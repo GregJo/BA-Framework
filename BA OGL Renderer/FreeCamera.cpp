@@ -115,8 +115,6 @@ void FreeCamera::update()
 	m_lookDir.y = float(cos(m_beta));
 	m_lookDir.z = float(sin(m_beta) * sin(m_alpha));
 	m_lookDir = glm::normalize(m_lookDir);
-	
-	
 
 	float camOrientation1 = glm::dot(glm::normalize(glm::abs(glm::vec3(m_lookDir.x,0,m_lookDir.z))),m_lookDir);
 	float camOrientation2 = glm::dot(glm::normalize(glm::vec3(0,1,0)),m_lookDir);
@@ -141,6 +139,11 @@ void FreeCamera::update()
 	glm::mat4 view = glm::lookAt(m_position, (m_position+m_lookDir), m_upDir);
 
 	m_vp = m_projection * view;
+
+	// Calculate the inverted X, Z rotation view matrix.
+	glm::mat4 inverseXZRotationView = glm::inverse(glm::lookAt(m_position, (m_position+glm::vec3(m_lookDir.x,0.0f,m_lookDir.z)), m_upDir));
+
+	m_inverseXZRotationVP = m_projection * inverseXZRotationView;
 
 	check_gl_error();
 }

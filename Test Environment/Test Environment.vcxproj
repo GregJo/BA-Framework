@@ -85,17 +85,35 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OIT New Coverage Algorithm.cpp" />
+    <ClCompile Include="OIT New Coverage Depth Weights Algorithm.cpp" />
     <ClCompile Include="OIT OVER Depth Peeling Algorithm.cpp" />
     <ClCompile Include="OIT Test Environment.cpp" />
     <ClCompile Include="OIT Weighted Average Algorithm.cpp" />
     <ClCompile Include="OIT Weighted Sum Algorithm.cpp" />
+    <ClCompile Include="Smoke Particle System.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AccumTransparencyBillboardsFrag.glsl" />
+    <None Include="AccumTransparencyBillboardsVert.glsl" />
     <None Include="AccumTransparencyFrag.glsl" />
+    <None Include="AccumTransparencyRevealageBillboardsFrag.glsl" />
+    <None Include="AccumTransparencyRevealageBillboardsVert.glsl" />
     <None Include="AccumTransparencyRevealageFrag.glsl" />
+    <None Include="AccumTransparencyRevealageSmokeParticleSystemFrag.glsl" />
+    <None Include="AccumTransparencyRevealageSmokeParticleSystemVert.glsl" />
     <None Include="AccumTransparencyRevealageVert.glsl" />
+    <None Include="AccumTransparencySmokeParticleSystemFrag.glsl" />
+    <None Include="AccumTransparencySmokeParticleSystemVert.glsl" />
     <None Include="AccumTransparencyVert.glsl" />
+    <None Include="BillboardFrag.glsl" />
+    <None Include="BillboardSmokeParticleFrag.glsl" />
+    <None Include="BillboardSmokeParticleVert.glsl" />
+    <None Include="BillboardVert.glsl" />
+    <None Include="DepthPeelingBillboardsFrag.glsl" />
+    <None Include="DepthPeelingBillboardsVert.glsl" />
     <None Include="DepthPeelingFrag.glsl" />
+    <None Include="DepthPeelingSmokeParticleSystemFrag.glsl" />
+    <None Include="DepthPeelingSmokeParticleSystemVert.glsl" />
     <None Include="DepthPeelingVert.glsl" />
     <None Include="DifferenceImageFrag.glsl" />
     <None Include="DifferenceImageVert.glsl" />
@@ -107,16 +125,22 @@
     <None Include="Vert.glsl" />
     <None Include="WeightedAverageFrag.glsl" />
     <None Include="WeightedAverageVert.glsl" />
+    <None Include="WeightedSumBillboardsFrag.glsl" />
+    <None Include="WeightedSumBillboardsVert.glsl" />
     <None Include="WeightedSumFrag.glsl" />
+    <None Include="WeightedSumSmokeParticleSystemFrag.glsl" />
+    <None Include="WeightedSumSmokeParticleSystemVert.glsl" />
     <None Include="WeightedSumVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IOIT Algorithms.h" />
     <ClInclude Include="OIT New Coverage Algorithm.h" />
+    <ClInclude Include="OIT New Coverage Depth Weights Algorithm.h" />
     <ClInclude Include="OIT OVER Depth Peeling Algorithm.h" />
     <ClInclude Include="OIT Test Environment.h" />
     <ClInclude Include="OIT Weighted Average Algorithm.h" />
     <ClInclude Include="OIT Weighted Sum Algorithm.h" />
+    <ClInclude Include="Smoke Particle System.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

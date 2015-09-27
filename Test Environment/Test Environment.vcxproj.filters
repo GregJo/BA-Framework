@@ -40,6 +40,15 @@
     <Filter Include="Ressourcendateien\Difference Image">
       <UniqueIdentifier>{00cc2cbc-5d6b-4f14-b8f4-2b4bd4811077}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Particle System">
+      <UniqueIdentifier>{99ffd175-f87b-4a9f-91a1-c4800c65e3dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Particle System">
+      <UniqueIdentifier>{623ce89d-fb8a-4315-a42d-84c0b10886d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\Billboard">
+      <UniqueIdentifier>{6bd12b41-74a9-4928-9f0a-cfa00a8a0806}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -58,6 +67,12 @@
       <Filter>Quelldateien\OIT Algorithms</Filter>
     </ClCompile>
     <ClCompile Include="OIT New Coverage Algorithm.cpp">
+      <Filter>Quelldateien\OIT Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="Smoke Particle System.cpp">
+      <Filter>Quelldateien\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="OIT New Coverage Depth Weights Algorithm.cpp">
       <Filter>Quelldateien\OIT Algorithms</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,6 +131,66 @@
     <None Include="DifferenceImageVert.glsl">
       <Filter>Ressourcendateien\Difference Image</Filter>
     </None>
+    <None Include="BillboardFrag.glsl">
+      <Filter>Ressourcendateien\Billboard</Filter>
+    </None>
+    <None Include="BillboardVert.glsl">
+      <Filter>Ressourcendateien\Billboard</Filter>
+    </None>
+    <None Include="DepthPeelingBillboardsVert.glsl">
+      <Filter>Ressourcendateien\OIT OVER Depth Peeling Shader</Filter>
+    </None>
+    <None Include="DepthPeelingBillboardsFrag.glsl">
+      <Filter>Ressourcendateien\OIT OVER Depth Peeling Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageBillboardsFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageBillboardsVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyBillboardsFrag.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyBillboardsVert.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="WeightedSumBillboardsFrag.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Sum</Filter>
+    </None>
+    <None Include="WeightedSumBillboardsVert.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Sum</Filter>
+    </None>
+    <None Include="BillboardSmokeParticleFrag.glsl">
+      <Filter>Ressourcendateien\Billboard</Filter>
+    </None>
+    <None Include="BillboardSmokeParticleVert.glsl">
+      <Filter>Ressourcendateien\Billboard</Filter>
+    </None>
+    <None Include="WeightedSumSmokeParticleSystemFrag.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Sum</Filter>
+    </None>
+    <None Include="WeightedSumSmokeParticleSystemVert.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Sum</Filter>
+    </None>
+    <None Include="AccumTransparencySmokeParticleSystemVert.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="AccumTransparencySmokeParticleSystemFrag.glsl">
+      <Filter>Ressourcendateien\OIT Weighted Average Shader</Filter>
+    </None>
+    <None Include="DepthPeelingSmokeParticleSystemFrag.glsl">
+      <Filter>Ressourcendateien\OIT OVER Depth Peeling Shader</Filter>
+    </None>
+    <None Include="DepthPeelingSmokeParticleSystemVert.glsl">
+      <Filter>Ressourcendateien\OIT OVER Depth Peeling Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageSmokeParticleSystemFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageSmokeParticleSystemVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IOIT Algorithms.h">
@@ -134,6 +209,12 @@
       <Filter>Headerdateien\OIT Algorithms</Filter>
     </ClInclude>
     <ClInclude Include="OIT New Coverage Algorithm.h">
+      <Filter>Headerdateien\OIT Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="Smoke Particle System.h">
+      <Filter>Headerdateien\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="OIT New Coverage Depth Weights Algorithm.h">
       <Filter>Headerdateien\OIT Algorithms</Filter>
     </ClInclude>
   </ItemGroup>

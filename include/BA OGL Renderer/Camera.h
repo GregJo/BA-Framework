@@ -23,6 +23,9 @@ public:
 	virtual void update();
 	virtual void camControll(GLFWwindow* window);
 
+	glm::vec3 getUpVector() { return m_upDir; }
+	glm::vec3 getRightVector() { return m_rightDir; }
+
 	glm::mat4 getVPMatrix() { return m_vp; }
 	glm::mat4 getVMatrix() { return m_view; }
 	glm::mat4 getPMatrix() { return m_projection; }
