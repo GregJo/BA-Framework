@@ -179,6 +179,8 @@ void Quad::render()
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	check_gl_error();
 }
 

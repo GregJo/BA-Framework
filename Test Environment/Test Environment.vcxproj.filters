@@ -49,6 +49,9 @@
     <Filter Include="Ressourcendateien\Billboard">
       <UniqueIdentifier>{6bd12b41-74a9-4928-9f0a-cfa00a8a0806}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ressourcendateien\OIT New Coverage Depth Weights">
+      <UniqueIdentifier>{d84ad228-5782-4dfa-ad3e-83d5d28a233a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -190,6 +193,30 @@
     </None>
     <None Include="AccumTransparencyRevealageSmokeParticleSystemVert.glsl">
       <Filter>Ressourcendateien\OIT New Coverage Shader</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageDepthWeightsBillboardsFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageDepthWeightsBillboardsVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageDepthWeightsSmokeParticleSystemFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageDepthWeightsSmokeParticleSystemVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageDepthWeightsFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
+    </None>
+    <None Include="AccumTransparencyRevealageDepthWeightsVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
+    </None>
+    <None Include="NewOITCoverageDepthWeightsFrag.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
+    </None>
+    <None Include="NewOITCoverageDepthWeightsVert.glsl">
+      <Filter>Ressourcendateien\OIT New Coverage Depth Weights</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

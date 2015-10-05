@@ -44,11 +44,11 @@ void main()
 	//	resultImage += vec4(0.0,grayResult2,0.0,0.0);
 	//}
 
-	if(grayResult1 > 0 && differenceImage1.a > 0.0000001) //referenceImage.a > 0.0001 && comparisonImage.a > 0.0001)
+	if(grayResult1 > 0)// && differenceImage1.a > 0.0000001) //referenceImage.a > 0.0001 && comparisonImage.a > 0.0001)
 	{
 		resultImage += vec4(grayResult1,0.0,0.0,0.0);
 	}
-	if(grayResult2 > 0 && differenceImage2.a > 0.0000001) //referenceImage.a > 0.0001 && comparisonImage.a > 0.0001)
+	if(grayResult2 > 0)// && differenceImage2.a > 0.0000001) //referenceImage.a > 0.0001 && comparisonImage.a > 0.0001)
 	{
 		resultImage += vec4(0.0,grayResult2,0.0,0.0);
 	}

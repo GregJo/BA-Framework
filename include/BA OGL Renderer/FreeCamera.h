@@ -26,7 +26,7 @@ public:
 	glm::vec3 getCamPos() { return m_position; }
 
 	// Get the X, Z rotation inverted view projection matrix (for billboards primarily).
-	glm::mat4 getInverseXZRotationVP() { return m_inverseXZRotationVP; }
+	//glm::mat4 getInverseXZRotationVP() { return m_inverseXZRotationVP; }
 
 private:
 

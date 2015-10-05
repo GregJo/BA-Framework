@@ -483,9 +483,9 @@ int main()
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		screenFillingQuad->getCurrentShaderProgram()->use();
-		screenFillingQuad->setTexture(frameBufferOpaque->getColorAttachment(0));
-		screenFillingQuad->render();
+		//screenFillingQuad->getCurrentShaderProgram()->use();
+		//screenFillingQuad->setTexture(frameBufferOpaque->getColorAttachment(0));
+		//screenFillingQuad->render();
 
 		//screenFillingQuad->getCurrentShaderProgram()->use();
 		//screenFillingQuad->setTexture(frameBufferTransparent->getColorAttachment(0));

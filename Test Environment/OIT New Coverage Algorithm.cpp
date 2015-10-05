@@ -90,7 +90,7 @@ void OITNewCoverage::VAlgorithm(FreeCamera* camera, std::vector<Model*> models, 
 	defaultShader->setUniform("VPMatrix", camera->getVPMatrix());
 
 	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER,0.0f);
+	glAlphaFunc(GL_GREATER,0.99f);
 
 	for (unsigned int i = 0; i < models.size(); i++)
 	{

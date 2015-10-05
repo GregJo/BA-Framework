@@ -16,6 +16,7 @@
 #include "OIT Weighted Sum Algorithm.h"
 #include "OIT Weighted Average Algorithm.h"
 #include "OIT New Coverage Algorithm.h"
+#include "OIT New Coverage Depth Weights Algorithm.h"
 
 #include <time.h>
 #include <iostream>
@@ -34,13 +35,21 @@ unsigned int numOfDepthPeelPasses=15;
 clock_t start;
 double systemTime;
 
-float globalScaling = 1.0;
+float globalScaling = 0.125;
 
 /*
 TODO: Scale models/depth (which of both?) according farplane/biggest model bounding box (Maybe both).
 The unscaled diagonal of the sponza scene, the biggest used model, is 4000.0 units. 
-Update 1 (27.10.2015, 01:45): Weird "noise"/wrong calculations on the foliage of the crytec sponza, at the difference image.
-
+Update 1 (27.09.2015, 01:45): Weird "noise"/wrong calculations on the foliage of the crytec sponza, at the difference image.
+Update 2 (02.10.2015, 03:01): Still could not fix the reason for the "noise"/the wrong calculations on the foliage of crytecs sponza, at the difference image.
+							  Noticed weird rendering of the foliage, rendering too much around it, despite setting the alpha of the alpha test to 0.0.
+							  Furthermore the opaque texture becomes black, after copying from it.
+							  After the first pass the copied difference texture does not contain anything.
+Update 3 (03.10.2015, 09:45): Weird "noise"/wrong calculations on the foliage of the crytec sponza, at the difference image are caused by the alpha test, 
+							  used for the approximative algorithms. Results of OIT New Coverage, etc. algorithms are faulted by the nature of calculating
+							  the transparency, e.g. multiplying yellow and green will result in green.
+							  Hence maybe take folliage out of consideration, or make it a specific category.
+							  (Currently only experimenting with the OIT New Coverage algorithm, alpha > 0.5 of Alpha Test produces already better results.)
 */
 
 int main()
@@ -62,8 +71,8 @@ int main()
 	FreeCamera* camera = new FreeCamera(45.0f, 16.0f/9.0f, 
 					0.0f, 0.0f, 
 					0.1f, 4000.0f * globalScaling, 
-					0.0004f, 3.0f,
-					glm::vec3(0,0,-50), 
+					0.0004f, 5.0f * globalScaling,
+					glm::vec3(0,0,-50) * globalScaling, 
 					glm::vec3(0,1,0), 
 					glm::vec3(0,0,0), 
 					true);
@@ -156,7 +165,7 @@ int main()
 	finalTextures.push_back(finalTextureHandle2);
 
 	// The difference image data as input for calculating the squared mean error.
-	GLfloat* differenceImageOITAlgorithms = new GLfloat[window->getWindowWidth()*window->getWindowHeight()*4];
+	unsigned char* differenceImageOITAlgorithms = new unsigned char[window->getWindowWidth()*window->getWindowHeight()*3];
 
 	// Framebuffer for opaque meshes.
 	Framebuffer* frameBufferOpaque = new Framebuffer(window->getWindowWidth(),window->getWindowHeight());
@@ -189,6 +198,10 @@ int main()
 	OITNewCoverage* newCoverageAlgorithm = new OITNewCoverage();
 	newCoverageAlgorithm->setGlobalScale(globalScaling);
 	newCoverageAlgorithm->VInit(window);
+
+	OITNewCoverageDepthWeights* newCoverageDepthWeightsAlgorithm = new OITNewCoverageDepthWeights();
+	newCoverageDepthWeightsAlgorithm->setGlobalScale(globalScaling);
+	newCoverageDepthWeightsAlgorithm->VInit(window);
 
 	// Create and initialize a screen filling quad.
 	Quad* screenFillingQuad = new Quad(glm::vec3(-1.0,1.0,0), glm::vec3(-1.0,-1.0,0), glm::vec3(1.0,-1.0,0), glm::vec3(1.0,1.0,0), glm::vec3(0), 0, 0, 0);
@@ -266,10 +279,10 @@ int main()
 		//shaders[DEFAULT_SHADER]->use();
 		//_________________________________________________________________________________________________________________________________________________________________
 
-		//for (int i = 0; i < smokeParticleSystems.size(); i--)
-		//{
-		//	smokeParticleSystems[i]->update(camera, systemTime);
-		//}
+		for (int i = 0; i < smokeParticleSystems.size(); i--)
+		{
+			smokeParticleSystems[i]->update(camera, systemTime);
+		}
 
 		//// Testing billboard rendering
 		//glDisable(GL_DEPTH_TEST);
@@ -315,6 +328,12 @@ int main()
 		//screenFillingQuad->setTexture(newCoverageAlgorithm->VGetResultTextureHandle());
 		//screenFillingQuad->render(); 
 
+		//newCoverageDepthWeightsAlgorithm->VAlgorithm(camera, models, transparentQuads, smokeParticleSystems, frameBufferOpaque, shaders[Shader::DEFAULT_SHADER], sampler);
+
+		//shaders[Shader::SCREEN_FILLING_SHADER]->use();
+		//screenFillingQuad->setTexture(newCoverageDepthWeightsAlgorithm->VGetResultTextureHandle());
+		//screenFillingQuad->render(); 
+
 		depthPeelingAlgorithm->VAlgorithm(camera, models, transparentQuads, frameBufferOpaque, shaders[Shader::DEFAULT_SHADER], sampler);
 		finalTextureHandle1 = depthPeelingAlgorithm->VGetResultTextureHandle();
 
@@ -337,58 +356,58 @@ int main()
 		finalTextures[1]=finalTextureHandle2;
 
 		screenFillingQuad->renderWithAdditionalTextures(finalTextures,sampler);
-		
+
 		//frameBufferSquaredMeanError->unbind();
 
 		//frameBufferSquaredMeanError->bindForReading();
-  //   
-		//glBindTexture(GL_TEXTURE_2D, squaredMeanErrorTextureHandle);
-		//glCopyTexImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, window->getWindowHeight(), window->getWindowHeight(), 0);
 
-		//glBindTexture(GL_TEXTURE_2D, 0);
-		//frameBufferSquaredMeanError->unbind();
+		glBindTexture(GL_TEXTURE_2D, squaredMeanErrorTextureHandle);
+		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, window->getWindowWidth(), window->getWindowHeight());
+		glBindTexture(GL_TEXTURE_2D, 0);
 
-		//squaredMeanErrorTextureHandle = frameBufferOpaque->getColorAttachment(0);
+		/*frameBufferSquaredMeanError->unbind();*/
 
-		// Keine race condition! Sonst hätte glFinish() die access violation beheben müssen.
-		//glFinish();
+		// Anzahl der Textureunits ermitteln
+		int numberOfTextureUnits = 0;
+		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &numberOfTextureUnits);
+		GLuint lastTextureUnit = GL_TEXTURE0 + (numberOfTextureUnits - 1);
+ 
+		// letzte texture unit binden, damit man mit der aktuellen textur arbeiten kann
+		glActiveTexture(lastTextureUnit);
+ 
+		// Kopiere textur in ein array:
+		// ============================================================
+		glBindTexture(GL_TEXTURE_2D, squaredMeanErrorTextureHandle);
+ 
+		GLint width;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+ 
+		GLint height;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+ 
+		float* pixels = new float[(int)width * (int)height * 3];
+ 
+		// "4" -> 32 bits pre channel = 4 bytes per channel.
+		glPixelStorei(GL_PACK_ALIGNMENT, 4);
 
-		// Get the difference image data.
-		//glPixelStoref(GL_UNPACK_ALIGNMENT, 1);
-		//if( differenceImageOITAlgorithms != NULL && squaredMeanErrorTextureHandle != 0 )
-		//{
-		//	//glBindTexture(GL_TEXTURE_2D, squaredMeanErrorTextureHandle);
-		//	GLint width=0, height=0, internalFormat=0, redSize = 0, greenSize = 0, blueSize, alphaSize = 0;
-		//	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
-		//	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
-		//	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internalFormat);
-		//	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_RED_SIZE, &redSize);
-		//	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_GREEN_SIZE, &greenSize);
-		//	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_BLUE_SIZE, &blueSize);
-		//	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_ALPHA_SIZE, &alphaSize);
-		//	int sizeOfGLfloat = sizeof(GLfloat);
-		//	//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, &differenceImageOITAlgorithms);
-			//frameBufferSquaredMeanError->bind();
-			//frameBufferSquaredMeanError->bindForRenderPass(activeColorAttachments);
-			//glReadBuffer(GL_COLOR_ATTACHMENT0);
-			//glReadPixels(0, 0, window->getWindowWidth(), window->getWindowHeight(), GL_RGBA, GL_FLOAT, &differenceImageOITAlgorithms);
-			//frameBufferSquaredMeanError->unbind();
-			//glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA32F,window->getWindowWidth(),window->getWindowHeight(),0,GL_RGBA,GL_FLOAT, &differenceImageOITAlgorithms);
-			//glTexSubImage2D(GL_TEXTURE_2D,0,0,0,window->getWindowWidth(), window->getWindowHeight(),GL_RGBA,GL_UNSIGNED_BYTE,differenceImageOITAlgorithms);
+		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, pixels);
 
-			//glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
-			//GLfloat squaredMeanError = 0;
+		float squaredMeanError = 0.0f;
 
-			//for (int i = 0; i < (window->getWindowWidth()*window->getWindowHeight()*4); i++)
-			//{
-			//	squaredMeanError += differenceImageOITAlgorithms[i];
-			//}
+		for (int i = 0; i < (int)width * (int)height * 3; i++)
+		{
+			squaredMeanError += std::pow((1.0f/3.0f*pixels[i]),2.0f);
+		}
 
-			//squaredMeanError /= float(window->getWindowWidth()*window->getWindowHeight()*4);
+		delete[] pixels;
 
-			//std::cout << "Squared Mean Error: " << squaredMeanError << std::endl;
-		//}
+		squaredMeanError /= float(window->getWindowWidth()*window->getWindowHeight()*3);
+
+		std::cout << "Squared Mean Error: " << squaredMeanError << std::endl;
+
+		glActiveTexture(GL_TEXTURE0);
 
 		window->swapBuffers();
 

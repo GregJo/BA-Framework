@@ -47,7 +47,7 @@ private:
 	GLSLProgram* m_accumTransparencyRevealageDepthWeightsBillboardsShader;
 	GLSLProgram* m_accumTransparencyRevealageDepthWeightsSmokeParticleSystemShader;
 	
-	GLSLProgram* m_newOITCoverageShader;
+	GLSLProgram* m_newOITCoverageDepthWeightsShader;
 	GLSLProgram* m_screenFillingQuadShader;
 
 	Framebuffer* m_accumFrameBuffer;
@@ -56,6 +56,7 @@ private:
 
 	std::vector<GLuint> m_additionalTexturesTransparency;
 	std::vector<GLuint> m_additionalTexturesOpaque;
+	std::vector<GLuint> m_additionalTexturesDepth;
 
 	std::vector<unsigned int> m_activeColorAttachments;
 };

@@ -23,6 +23,16 @@ public:
 	virtual void update();
 	virtual void camControll(GLFWwindow* window);
 
+	GLdouble getNearPlane()
+	{
+		return m_near;
+	}
+
+	GLdouble getFarPlane()
+	{
+		return m_far;
+	}
+
 	glm::vec3 getUpVector() { return m_upDir; }
 	glm::vec3 getRightVector() { return m_rightDir; }
 

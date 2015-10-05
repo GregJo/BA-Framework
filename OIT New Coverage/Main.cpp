@@ -269,9 +269,9 @@ int main()
 		//_______________________________________________________________________________________________________________________________________________________________________________
 		// Final compositing pass
 
-		screenFillingQuad->setGLSLProgram(*screenFillingQuadShader);
-		screenFillingQuad->getCurrentShaderProgram()->use();
-		screenFillingQuad->renderWithAdditionalTextures(opaqueTextureHandle,sampler);
+		//screenFillingQuad->setGLSLProgram(*screenFillingQuadShader);
+		//screenFillingQuad->getCurrentShaderProgram()->use();
+		//screenFillingQuad->renderWithAdditionalTextures(opaqueTextureHandle,sampler);
 
 		newOITCoverageShader->use();
 

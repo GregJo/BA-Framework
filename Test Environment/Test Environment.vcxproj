@@ -98,6 +98,12 @@
     <None Include="AccumTransparencyFrag.glsl" />
     <None Include="AccumTransparencyRevealageBillboardsFrag.glsl" />
     <None Include="AccumTransparencyRevealageBillboardsVert.glsl" />
+    <None Include="AccumTransparencyRevealageDepthWeightsBillboardsFrag.glsl" />
+    <None Include="AccumTransparencyRevealageDepthWeightsBillboardsVert.glsl" />
+    <None Include="AccumTransparencyRevealageDepthWeightsFrag.glsl" />
+    <None Include="AccumTransparencyRevealageDepthWeightsSmokeParticleSystemFrag.glsl" />
+    <None Include="AccumTransparencyRevealageDepthWeightsSmokeParticleSystemVert.glsl" />
+    <None Include="AccumTransparencyRevealageDepthWeightsVert.glsl" />
     <None Include="AccumTransparencyRevealageFrag.glsl" />
     <None Include="AccumTransparencyRevealageSmokeParticleSystemFrag.glsl" />
     <None Include="AccumTransparencyRevealageSmokeParticleSystemVert.glsl" />
@@ -118,6 +124,8 @@
     <None Include="DifferenceImageFrag.glsl" />
     <None Include="DifferenceImageVert.glsl" />
     <None Include="Frag.glsl" />
+    <None Include="NewOITCoverageDepthWeightsFrag.glsl" />
+    <None Include="NewOITCoverageDepthWeightsVert.glsl" />
     <None Include="NewOITCoverageFrag.glsl" />
     <None Include="NewOITCoverageVert.glsl" />
     <None Include="screenFillingQuadFrag.glsl" />
